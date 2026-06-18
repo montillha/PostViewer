@@ -2,9 +2,9 @@ package br.edu.ifsp.scl.sc3043894.postviewer
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.edu.ifsp.scl.sc3043894.postviewer.model.api.PostsService
 import br.edu.ifsp.scl.sc3043894.postviewer.model.dto.Comment
 import br.edu.ifsp.scl.sc3043894.postviewer.model.dto.Post
-import br.edu.ifsp.scl.sc3043894.postviewer.model.repository.PostRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class PostViewModel: ViewModel() {
 
-    val postsRepository = PostRepository
+    val postsService = PostsService
     private val _posts = MutableStateFlow<List<Post>>(emptyList())
     val posts: StateFlow<List<Post>> = _posts.asStateFlow()
 
@@ -35,7 +35,7 @@ class PostViewModel: ViewModel() {
             _isLoading.value = true
             _errorMessage.value = null
             try {
-                _posts.value = postsRepository.getPosts()
+                _posts.value = postsService.getPosts()
             } catch (e: Exception) {
                 _errorMessage.value = e.message ?: "Erro ao carregar posts"
             } finally {
@@ -49,7 +49,7 @@ class PostViewModel: ViewModel() {
             _isLoading.value = true
             _errorMessage.value = null
             try {
-                _comments.value = postsRepository.getComments(postId)
+                _comments.value = postsService.getComments(postId)
             } catch (e: Exception) {
                 _errorMessage.value = e.message ?: "Erro ao carregar comentários"
             } finally {
