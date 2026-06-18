@@ -57,4 +57,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.gson)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+
 }
