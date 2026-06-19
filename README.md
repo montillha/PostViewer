@@ -14,6 +14,7 @@ Aplicativo Android que consome a API pública [JSONPlaceholder](https://jsonplac
 - **Tela de Lista de Posts**: carrega `GET /posts` e exibe o título de cada post. Ao tocar em um item, o app navega para a tela de detalhes do post correspondente.
 - **Tela de Detalhes do Post**: carrega `GET /posts/{id}/comments` e exibe o título do post junto com a lista de comentários da API.
 - **Estados de carregamento e erro**: ambas as telas exibem um indicador de carregamento enquanto a requisição está em andamento e uma mensagem de erro caso a chamada falhe.
+- **Adição de comentário local (Room)**: na tela de detalhes, o usuário pode digitar um comentário em um campo de texto e confirmá-lo com um botão. O comentário é salvo no banco de dados Room associado ao post, aparece imediatamente na lista junto com os comentários da API, e persiste entre sessões do app.
 
 ## ▶️ Como executar o projeto localmente
 
@@ -31,6 +32,7 @@ Não é necessária nenhuma configuração adicional (chave de API, variáveis d
 - **Jetpack Compose** — construção da interface
 - **Navigation Compose** — navegação entre a lista de posts e os detalhes
 - **Retrofit + Gson Converter** — consumo da API REST
+- **Room** — persistência local dos comentários adicionados pelo usuário
 - **ViewModel + StateFlow** — gerenciamento de estado (posts, comentários, carregamento e erro)
 
 ## 💡 Decisões de design
@@ -45,11 +47,14 @@ Não é necessária nenhuma configuração adicional (chave de API, variáveis d
 - **Tratamento de loading e erro nas telas**: exigido pela especificação do trabalho; evita assumir que toda chamada à API terá sucesso, melhorando a experiência do usuário em
   caso de falha de rede.
 
+- **Room**: persistência local simples e integrada ao Kotlin, usada para guardar os comentários adicionados pelo usuário associados ao post, sem depender de servidor.
+
 ## 📸 Capturas de tela
 
 As capturas de tela estão na pasta [`docs/`](docs/):
 
 - `PostsScreen.jpg`: tela de lista de posts com dados carregados da API.
-- `DetailsScreen.jpg`: tela de detalhes de um post com os comentários da API visíveis.
+- `DetailsScreen.jpg`: tela de detalhes de um post com os comentários da API visíveis (a imagem ainda será atualizada para mostrar também um comentário local adicionado pelo usuário).
+
 
 
