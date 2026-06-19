@@ -54,7 +54,10 @@ fun PostsScreen(
                     items(items = posts, key = { it.id }){ post ->
                         Column(
                             modifier = Modifier.fillMaxWidth()
-                                .clickable { onPostClick(post.id)}
+                                .clickable {
+                                    postViewModel.setCurrentPostId(post.id)
+                                    onPostClick(post.id)
+                                }
                                 .padding(16.dp)
                         ) {
                             Text(text = post.title, fontSize = 18.sp)

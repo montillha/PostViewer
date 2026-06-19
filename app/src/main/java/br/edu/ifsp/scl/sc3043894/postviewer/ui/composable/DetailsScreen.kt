@@ -38,13 +38,14 @@ import br.edu.ifsp.scl.sc3043894.postviewer.ui.theme.PostViewerTheme
 @Composable
 fun DetailsScreen(
     postViewModel: PostViewModel,
-    postId: Int,
     modifier: Modifier = Modifier
 
 ) {
 
+    val postId by postViewModel.currentPostId.collectAsState()
+
     LaunchedEffect(postId){
-        postViewModel.loadComments(postId)
+        postId?.let { postViewModel.loadComments(it) }
     }
 
     val context = LocalContext.current
@@ -84,8 +85,8 @@ fun DetailsScreen(
         }
         Button (
             onClick = {
-                if (newCommentText.isNotBlank()) {
-                    postViewModel.addLocalComment(postId = postId, body = newCommentText)
+                if (newCommentText.isNotBlank() && postId != null) {
+                    postViewModel.addLocalComment(postId = postId!!, body = newCommentText)
                     newCommentText = ""
                 }else{
                     Toast.makeText(context, "Digite um comentário antes de enviar", Toast.LENGTH_SHORT).show()
@@ -137,6 +138,6 @@ fun DetailsScreen(
 @Composable
 fun DetailsScreenPreview(){
     PostViewerTheme() {
-        DetailsScreen(postViewModel = viewModel(), postId = 1)
+        DetailsScreen(postViewModel = viewModel())
     }
 }

@@ -27,6 +27,13 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
     private val _localComments = MutableStateFlow<List<LocalComment>>(emptyList())
     val localComments: StateFlow<List<LocalComment>> = _localComments.asStateFlow()
 
+    private val _currentPostId = MutableStateFlow<Int?>(null)
+    val currentPostId: StateFlow<Int?> = _currentPostId.asStateFlow()
+
+    fun setCurrentPostId(postId: Int) {
+        _currentPostId.value = postId
+    }
+
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
