@@ -9,7 +9,9 @@ activityCompose = "1.13.0"
 kotlin = "2.0.21"
 composeBom = "2024.09.00"
 retrofit = "2.11.0"
-navVersion = "2.9.8"
+navVersion ="2.9.8"
+kspVersion = "2.3.9"
+roomVersion = "2.8.4"
 
 
 [libraries]
@@ -31,10 +33,14 @@ retrofit-core = {group = "com.squareup.retrofit2",name = "retrofit", version.ref
 retrofit-gson = {group = "com.squareup.retrofit2",name = "converter-gson", version.ref = "retrofit"}
 androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navVersion" }
-
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
 
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
+
 
