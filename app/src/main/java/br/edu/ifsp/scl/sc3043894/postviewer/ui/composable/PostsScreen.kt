@@ -26,7 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 @Composable
-fun ListScreen(
+fun PostsScreen(
     postViewModel: PostViewModel,
     modifier: Modifier = Modifier,
     onPostClick: (Int) -> Unit
@@ -70,9 +70,9 @@ fun ListScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun ListScreenPreview(){
+fun PostsScreenPreview(){
     PostViewerTheme{
-        ListScreen(postViewModel = viewModel()) {}
+        PostsScreen(postViewModel = viewModel()) {}
 
     }
 }

@@ -21,7 +21,7 @@ fun MainNavHost(
         startDestination = Screen.Posts.route
     ) {
         composable(route = Screen.Posts.route) {
-            ListScreen(postViewModel = postViewModel, modifier = modifier) { postId ->
+            PostsScreen(postViewModel = postViewModel, modifier = modifier) { postId ->
                 navController.navigate(Screen.Details.createRoute(postId))
             }
         }
