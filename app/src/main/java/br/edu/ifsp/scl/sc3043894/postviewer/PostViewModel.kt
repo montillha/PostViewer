@@ -12,6 +12,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class PostViewModel(application: Application): AndroidViewModel(application) {
@@ -24,11 +27,15 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
     private val _comments = MutableStateFlow<List<Comment>>(emptyList())
     val comments: StateFlow<List<Comment>> = _comments.asStateFlow()
 
+
     private val _localComments = MutableStateFlow<List<LocalComment>>(emptyList())
     val localComments: StateFlow<List<LocalComment>> = _localComments.asStateFlow()
 
     private val _currentPostId = MutableStateFlow<Int?>(null)
     val currentPostId: StateFlow<Int?> = _currentPostId.asStateFlow()
+
+    private val _allComments = MutableStateFlow<List<Comment>>(emptyList())
+    val allComments: StateFlow<List<Comment>> = _comments.asStateFlow()
 
     fun setCurrentPostId(postId: Int) {
         _currentPostId.value = postId
@@ -43,6 +50,29 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
     init {
         localCommentRepository.init(application)
         loadPosts()
+        loadAllComments()
+
+    }
+
+
+    fun getTotalComment(postId: Int) : Int{
+
+        return _allComments.value.filter {it -> it.postId == postId }.count()
+
+    }
+
+    fun loadAllComments(){
+        viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.value = true
+            _errorMessage.value = null
+            try {
+                _allComments.value = postsService.getAllComments()
+            } catch (e: Exception) {
+                _errorMessage.value = e.message ?: "Erro ao carregar comentários"
+            } finally {
+                _isLoading.value = false
+            }
+        }
     }
 
     fun loadPosts() {
@@ -59,7 +89,7 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun loadComments(postId: Int) {
+    fun  loadComments(postId: Int){
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
             _errorMessage.value = null

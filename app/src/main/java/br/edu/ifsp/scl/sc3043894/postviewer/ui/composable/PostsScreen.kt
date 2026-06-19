@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,7 +23,7 @@ import androidx.compose.ui.unit.sp
 import br.edu.ifsp.scl.sc3043894.postviewer.PostViewModel
 import br.edu.ifsp.scl.sc3043894.postviewer.ui.theme.PostViewerTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
-
+import br.edu.ifsp.scl.sc3043894.postviewer.model.dto.Comment
 
 
 @Composable
@@ -33,8 +34,10 @@ fun PostsScreen(
 ){
 
     val posts by postViewModel.posts.collectAsState()
+    val comments by postViewModel.allComments.collectAsState()
     val isLoading by postViewModel.isLoading.collectAsState()
     val errorMessage by postViewModel.errorMessage.collectAsState()
+
 
     Box(
         modifier = modifier.fillMaxSize()
@@ -61,6 +64,7 @@ fun PostsScreen(
                                 .padding(16.dp)
                         ) {
                             Text(text = post.title, fontSize = 18.sp)
+                            Text(text = "Number of Comments: ${postViewModel.getTotalComment(post.id)}")
                         }
                         HorizontalDivider()
                     }

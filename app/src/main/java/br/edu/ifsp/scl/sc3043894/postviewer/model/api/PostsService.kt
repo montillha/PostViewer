@@ -18,6 +18,9 @@ object PostsService{
         @GET("posts/{id}/comments")
         fun getComments(@Path("id") postId: Int): Call<List<Comment>>
 
+        @GET("comments")
+        fun getAllComments(): Call<List<Comment>>
+
 
     }
     private const val BASE_URL = "https://jsonplaceholder.typicode.com/"
@@ -38,6 +41,16 @@ object PostsService{
             emptyList()
         }
     }
+
+    suspend fun getAllComments(): List<Comment> {
+        val response = postsApi.getAllComments().awaitResponse()
+        return if (response.isSuccessful) {
+            response.body() ?: emptyList()
+        } else {
+            emptyList()
+        }
+    }
+
 
     suspend fun getComments(postId: Int): List<Comment> {
         val response = postsApi.getComments(postId).awaitResponse()
